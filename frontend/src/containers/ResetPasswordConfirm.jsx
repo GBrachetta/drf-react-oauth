@@ -1,7 +1,70 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { resetPasswordConfirm } from '../actions/auth';
 
-const ResetPasswordConfirm = () => {
-  return <div>Reset Password Confirm</div>;
+const ResetPasswordConfirm = ({ match, resetPasswordConfirm }) => {
+  const [requestSent, setRequestSent] = useState(false);
+  const [formData, setFormData] = useState({
+    new_password: '',
+    re_new_password: '',
+  });
+
+  const { new_password, re_new_password } = formData;
+
+  const onChange = (e) =>
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+
+    const uid = match.params.uid;
+    const token = match.params.token;
+
+    resetPasswordConfirm(uid, token, new_password, re_new_password);
+    setRequestSent(true);
+  };
+
+  if (requestSent) {
+    return <Redirect to="/" />;
+  }
+
+  return (
+    <div className="container mt-5">
+      <form onSubmit={(e) => onSubmit(e)}>
+        <div className="form-group">
+          <input
+            type="password"
+            name="new_password"
+            className="form-control"
+            value={new_password}
+            placeholder="New Password"
+            onChange={(e) => onChange(e)}
+            minLength="6"
+            required
+          />
+        </div>
+        <div className="form-group">
+          <input
+            type="password"
+            name="re_new_password"
+            className="form-control"
+            value={re_new_password}
+            placeholder="Confirm New Password"
+            onChange={(e) => onChange(e)}
+            minLength="6"
+            required
+          />
+        </div>
+        <button className="btn btn-primary" type="submit">
+          Reset Password
+        </button>
+      </form>
+    </div>
+  );
 };
 
-export default ResetPasswordConfirm;
+export default connect(null, { resetPasswordConfirm })(ResetPasswordConfirm);
