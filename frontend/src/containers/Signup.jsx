@@ -3,17 +3,19 @@ import React, { useState } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { signup } from '../actions/auth';
+import axios from 'axios';
 
 const Signup = ({ signup, isAuthenticated }) => {
   const [accountCreated, setAccountCreated] = useState(false);
   const [formData, setFormData] = useState({
-    name: '',
+    first_name: '',
+    last_name: '',
     email: '',
     password: '',
     re_password: '',
   });
 
-  const { name, email, password, re_password } = formData;
+  const { first_name, last_name, email, password, re_password } = formData;
 
   const onChange = (e) =>
     setFormData({
@@ -25,8 +27,20 @@ const Signup = ({ signup, isAuthenticated }) => {
     e.preventDefault();
 
     if (password === re_password) {
-      signup(name, email, password, re_password);
+      signup(first_name, last_name, email, password, re_password);
       setAccountCreated(true);
+    }
+  };
+
+  const continueWithGoogle = async () => {
+    try {
+      const res = await axios.get(
+        `${process.env.REACT_APP_API_URL}/o/google-oauth2/?redirect_uri=${process.env.REACT_APP_HOST}`
+      );
+
+      window.location.replace(res.data.authorization_url);
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -46,10 +60,21 @@ const Signup = ({ signup, isAuthenticated }) => {
         <div className="form-group">
           <input
             type="text"
-            name="name"
+            name="first_name"
             className="form-control"
-            value={name}
-            placeholder="Name*"
+            value={first_name}
+            placeholder="First Name*"
+            onChange={(e) => onChange(e)}
+            required
+          />
+        </div>
+        <div className="form-group">
+          <input
+            type="text"
+            name="last_name"
+            className="form-control"
+            value={last_name}
+            placeholder="Last Name*"
             onChange={(e) => onChange(e)}
             required
           />
@@ -93,6 +118,9 @@ const Signup = ({ signup, isAuthenticated }) => {
           Sign Up
         </button>
       </form>
+      <button className="btn btn-danger mt-3" onClick={continueWithGoogle}>
+        Sign up with Google
+      </button>
       <p className="mt-3">
         Have an account? <Link to="/login">Login</Link>
       </p>

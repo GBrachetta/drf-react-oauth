@@ -12,6 +12,7 @@ djoser = "*"
 psycopg2-binary = "*"
 psycopg2 = "*"
 django-cors-headers = "*"
+social-auth-app-django = "*"
 
 [dev-packages]
 flake8 = "*"
