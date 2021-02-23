@@ -1,13 +1,15 @@
 import React from 'react';
+import { Provider } from 'react-redux';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import Layout from './hoc/Layout';
 import Activate from './containers/Activate';
 import Home from './containers/Home';
 import Login from './containers/Login';
 import ResetPassword from './containers/ResetPassword';
 import ResetPasswordConfirm from './containers/ResetPasswordConfirm';
 import Signup from './containers/Signup';
-import { Provider } from 'react-redux';
+import Google from './containers/Google';
+import Facebook from './containers/Facebook';
+import Layout from './hoc/Layout';
 import store from './store';
 
 const App = () => (
@@ -18,6 +20,8 @@ const App = () => (
           <Route exact path="/" component={Home} />
           <Route exact path="/login" component={Login} />
           <Route exact path="/signup" component={Signup} />
+          <Route exact path="/facebook" component={Facebook} />
+          <Route exact path="/google" component={Google} />
           <Route exact path="/reset-password" component={ResetPassword} />
           <Route
             exact
