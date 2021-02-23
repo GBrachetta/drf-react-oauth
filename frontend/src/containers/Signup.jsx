@@ -126,15 +126,16 @@ const Signup = ({ signup, isAuthenticated }) => {
             required
           />
         </div>
-        <button className="btn btn-primary" type="submit">
+        <button className="btn btn-outline-primary" type="submit">
           Sign Up
         </button>
       </form>
       <button className="btn btn-danger mt-3" onClick={continueWithGoogle}>
-        Sign up with Google
+        Continue with Google
       </button>
+      <br />
       <button className="btn btn-primary mt-3" onClick={continueWithFacebook}>
-        Sign up with Facebook
+        Continue with Facebook
       </button>
       <p className="mt-3">
         Have an account? <Link to="/login">Login</Link>
