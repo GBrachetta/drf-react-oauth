@@ -2,6 +2,7 @@ from pathlib import Path
 import os
 from dotenv import load_dotenv
 from datetime import timedelta
+import dj_database_url
 
 
 load_dotenv()
@@ -68,13 +69,7 @@ WSGI_APPLICATION = "auth_system.wsgi.application"
 
 
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": "drf_react_auth",
-        "USER": "postgres",
-        "PASSWORD": os.environ.get("DB_PASSWORD"),
-        "HOST": "localhost",
-    }
+    "default": dj_database_url.parse(os.environ.get("DATABASE_URL")),
 }
 
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
