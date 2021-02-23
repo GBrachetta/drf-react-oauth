@@ -33,7 +33,6 @@ db.sqlite3
 
 # Distribution / packaging
 .Python
-build/
 develop-eggs/
 dist/
 downloads/
@@ -187,7 +186,6 @@ sketch
 /coverage
 
 # production
-/build
 
 # misc
 .DS_Store
